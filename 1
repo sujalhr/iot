@@ -1,0 +1,15 @@
+AIM : Write a program to interface LED/Buzzer with Arduino /Raspberry Pi and write a program to ‘turn ON’ LED for 1 sec after every 2 seconds.
+
+// the setup function runs once when you press reset or power the board
+Void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  PinMode(LED_BUILTIN, OUTPUT);
+}
+
+// the loop function runs over and over again forever
+Void loop() {
+  DigitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
+  delay(1000);                     // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);  // turn the LED off by making the voltage LOW
+  delay(2000);                     // wait for a second
+}

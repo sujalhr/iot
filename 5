@@ -1,0 +1,25 @@
+AIM : To interface the motor using a relay with Arduino /Raspberry Pi and write a program to ‘turn ON’ the motor when a push button is pressed. 
+Write a program to turn ON motor when push button is pressed using relay with Arduino UNO.
+
+const int bouton = 1; // the button is connected to pin 1 of the Arduino board
+const int relais_moteur = 2; // the relay is connected to pin 2 of the Arduino board
+
+int etatBouton;
+
+void setup() {
+  pinMode(bouton, INPUT);
+  pinMode(relais_moteur, OUTPUT);
+}
+
+void loop() {
+  etatBouton = digitalRead(bouton);
+
+  if (etatBouton == 0) // Push the push button
+  {
+    digitalWrite(relais_moteur, HIGH); // The motor starts to run
+  } 
+  else // Release the push button
+  {
+    digitalWrite(relais_moteur, LOW); // The motor stops running
+  }
+}

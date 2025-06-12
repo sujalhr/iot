@@ -1,0 +1,53 @@
+AIM : Write a program on Arduino to upload temperature and humidity data to thingspeak cloud
+
+#include <DHT.h>
+#include <ESP8266WiFi.h>
+#include "ThingSpeak.h"
+
+const char* ssid = "OnePlus Nord2 5G";
+const char* password = "sujatha@14";
+const unsigned long channelID = 2972432;
+const char* writeAPIKey = "43G7BPH9QAK1J6Q7";
+
+WiFiClient client;
+
+#define DHTPIN D4
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+
+  Serial.println("Connected to WiFi");
+  ThingSpeak.begin(client);
+  dht.begin();
+}
+
+void loop() {
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+
+  if (!isnan(temperature) || !isnan(humidity)) {
+    Serial.print("Uploading Temperature: ");
+    Serial.println(temperature);
+    Serial.print("Uploading Humidity: ");
+    Serial.println(humidity);
+
+    ThingSpeak.setField(1, temperature);
+    ThingSpeak.setField(2, humidity);
+    ThingSpeak.writeFields(channelID, writeAPIKey);
+
+    Serial.println("Data uploaded successfully.");
+  } else {
+    Serial.println("failed to read from DHT sensor.");
+  }
+
+  delay(2000);
+}

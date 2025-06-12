@@ -1,0 +1,50 @@
+AIM : Write a program on Arduino to retrieve temperature and humidity data from thingspeak cloud.
+
+#include <ESP8266WiFi.h>
+#include <ThingSpeak.h>
+
+const char* ssid = "OnePlus Nord2 5G";
+const char* password = "sujatha@14";
+
+unsigned long channelID = 2972432;
+unsigned int feildNumberTemp = 1;
+unsigned int feildNumberHum = 2;
+const char* readAPIKey = "B646EEISICCCE4F6";
+
+WiFiClient client;
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to wifi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected to wifi");
+  ThingSpeak.begin(client);
+}
+
+void loop() {
+  float temparature = ThingSpeak.readFloatField(channelID, feildNumberTemp, readAPIKey);
+  float humidity = ThingSpeak.readFloatField(channelID, feildNumberHum, readAPIKey);
+
+  Internet of Things (IoT) Lab - BECL657C 6th Semester
+  JSSATE, Bagaluru-6 Page 53
+
+  int statusCode = ThingSpeak.getLastReadStatus();
+  
+  if (statusCode == 200) {
+    Serial.print("Temparature:");
+    Serial.print(temparature);
+    Serial.println("C");
+    
+    Serial.print("Humidity:");
+    Serial.println("%");
+  } else {
+    Serial.println("Error reading from thingsspeak");
+    Serial.print(statusCode);
+  }
+
+  delay(2000);
+}

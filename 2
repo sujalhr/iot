@@ -1,0 +1,24 @@
+AIM : Write aprogram to turn ON LED when push button is pressed using Arduino Uno.
+
+Int PushButtonPin = 2;
+Int OutputPin = 13;
+
+void setup() {
+  pinMode(OutputPin, OUTPUT);
+  pinMode(PushButtonPin, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  intSensorValue = digitalRead(PushButtonPin);
+  Serial.print("PushButtonPinValue: ");
+  Serial.println(SensorValue);
+  delay(100);
+  
+  if (SensorValue == LOW) {
+    // LOW MEANS Object Detected
+    digitalWrite(Output Pin, HIGH);
+  } else {
+    DigitalWrite(OutputPin, LOW);
+  }
+}

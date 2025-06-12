@@ -1,0 +1,24 @@
+AIM : Write a program to interface the LDR Sensor with Arduino UNO.
+
+const int ledPin = 2;
+const int ldrPin = A0;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  int ldrvalue = analogRead(ldrPin);
+  Serial.println(ldrvalue);
+
+  if (ldrvalue > 600) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+
+  delay(1500);
+}
